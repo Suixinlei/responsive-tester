@@ -102,14 +102,14 @@ export const GridItemTitle = ({
       
       <div className="flex-1 flex flex-col gap-2">
         <Select 
-          value={device ? device.name : ''} 
+          value={device ? device.name : "manual"} 
           onValueChange={handleDeviceChange}
         >
           <SelectTrigger className="h-8 bg-transparent border-dashed border-muted/25 border-b-[1px] border-x-0 border-t-0 rounded-none text-sm">
             <SelectValue placeholder="Manual" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Manual</SelectItem>
+            <SelectItem value="manual">Manual</SelectItem>
             {devices.map((device) => (
               <SelectItem key={device.name} value={device.name}>
                 {device.name}

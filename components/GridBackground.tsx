@@ -1,4 +1,5 @@
-// components/GridBackground.tsx
+'use client';
+
 interface GridBackgroundProps {
   paddingSize: number
   rowHeight: number

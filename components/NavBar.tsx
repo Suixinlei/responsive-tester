@@ -3,12 +3,11 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { Twitter } from 'lucide-react'
+import { FaTwitter } from 'react-icons/fa'
 
-import { cn } from "@/lib/utils"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl } from "@/components/ui/form"
 
 interface NavBarProps {
   url: string
@@ -84,7 +83,7 @@ export const NavBar = ({ url: initialUrl, onUrlChanged, onTwitterShareClicked }:
             onClick={onTwitterShareClicked}
             className="w-10 h-10"
           >
-            <Twitter className="h-5 w-5" />
+            <FaTwitter className="h-5 w-5" />
           </Button>
         </div>
       </div>

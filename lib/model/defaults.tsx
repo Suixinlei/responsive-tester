@@ -1,4 +1,4 @@
-import { generateUUID } from '@kibalabs/core';
+import { v4 as uuidv4 } from 'uuid';
 
 import { IBox } from './box';
 
@@ -38,7 +38,7 @@ export const defaultLayout: IBox[] = [{
 
 export const createDefaultDevice = (): IBox => {
   return {
-    itemId: generateUUID(),
+    itemId: uuidv4(),
     deviceCode: 'bs-md',
     height: 0,
     width: 0,
