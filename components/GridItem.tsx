@@ -111,8 +111,8 @@ export const GridItem = ({
           ) : (
             <div className="relative w-full h-full">
               {!isWebViewLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary/50" />
+                <div className="absolute inset-0 flex items-center justify-center bg-background">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary/30" />
                 </div>
               )}
               <div 
