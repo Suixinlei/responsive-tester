@@ -1,36 +1,37 @@
-// components/NavBar.tsx
-"use client"
+"use client";
 
-import React from 'react'
-import Image from 'next/image'
-import { FaTwitter } from 'react-icons/fa'
+import React from "react";
+import Image from "next/image";
 
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface NavBarProps {
-  url: string
-  onUrlChanged: (url: string) => void
-  onTwitterShareClicked: () => void
+  url: string;
+  onUrlChanged: (url: string) => void;
 }
 
-export const NavBar = ({ url: initialUrl, onUrlChanged, onTwitterShareClicked }: NavBarProps) => {
-  const [url, setUrl] = React.useState<string>(initialUrl)
+export const NavBar = ({
+  url: initialUrl,
+  onUrlChanged,
+}: NavBarProps) => {
+  const [url, setUrl] = React.useState<string>(initialUrl);
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value)
-  }
+    setUrl(event.target.value);
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    let newUrl = url
-    if (!newUrl.startsWith('http')) {
-      newUrl = newUrl.startsWith('localhost') ? `http://${url}` : `https://${url}`
-      setUrl(newUrl)
+    event.preventDefault();
+    let newUrl = url;
+    if (!newUrl.startsWith("http")) {
+      newUrl = newUrl.startsWith("localhost")
+        ? `http://${url}`
+        : `https://${url}`;
+      setUrl(newUrl);
     }
-    onUrlChanged(newUrl)
-  }
+    onUrlChanged(newUrl);
+  };
 
   return (
     <div className="w-full bg-background border-b">
@@ -39,24 +40,14 @@ export const NavBar = ({ url: initialUrl, onUrlChanged, onTwitterShareClicked }:
           {/* Logo Section */}
           <div className="flex items-center h-[30px] shrink-1">
             <div className="flex items-center">
-              <div className="w-[30px] relative">
-                <Image
-                  src="/assets/favicon.svg"
-                  alt="logo"
-                  width={30}
-                  height={30}
-                  priority
-                />
-              </div>
-              <div className="max-w-[170px] ml-2">
-                <Image
-                  src="/assets/everysize-wordmark-dark.svg"
-                  alt="everysize"
-                  width={170}
-                  height={30}
-                  priority
-                />
-              </div>
+              <Image
+                src="https://img.alicdn.com/tfs/TB1gOVov.OWBKNjSZKzXXXfWFXa-64-64.png"
+                alt="kouka"
+                width={32}
+                height={32}
+                priority
+              />
+              <p className="ml-2 text-2xl font-bold">Responsive Tester</p>
             </div>
           </div>
 
@@ -75,18 +66,8 @@ export const NavBar = ({ url: initialUrl, onUrlChanged, onTwitterShareClicked }:
               </Button>
             </form>
           </div>
-
-          {/* Twitter Share Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onTwitterShareClicked}
-            className="w-10 h-10"
-          >
-            <FaTwitter className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

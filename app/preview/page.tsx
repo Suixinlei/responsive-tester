@@ -35,6 +35,7 @@ export default function GridPage() {
   const [storedUrl, setStoredUrl] = useState('https://www.kouka.tech')
 
   const [totalWidth, setTotalWidth] = React.useState(10000)
+
   const rowHeight = 20
   const columnWidth = 20
   const paddingSize = 10
@@ -90,8 +91,7 @@ export default function GridPage() {
     <div className="h-screen flex flex-col">
       <NavBar 
         url={url || ''} 
-        onUrlChanged={onUrlChanged} 
-        onTwitterShareClicked={onTwitterShareClicked} 
+        onUrlChanged={onUrlChanged}
       />
       <div className="flex-1" ref={gridRef}>
         <ScrollArea className="h-full">
