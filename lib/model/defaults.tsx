@@ -35,9 +35,9 @@ export const defaultLayout: IBox[] = [
 export const createDefaultDevice = (): IBox => {
   return {
     itemId: uuidv4(),
-    deviceCode: 'bs-md',
-    height: 0,
-    width: 0,
+    deviceCode: 'dp-1080',
+    height: 1080,
+    width: 1920,
     zoom: 2,
     positionX: 0,
     positionY: 0,

@@ -6,6 +6,8 @@ import { Loader2 } from 'lucide-react';
 
 import { cn } from "@/lib/utils";
 import { GridItemTitle } from './GridItemTitle';
+import { IBox } from '@/lib/model';
+import { WebView } from './WebView';
 
 interface GridItemChildrenHolderProps extends React.HTMLAttributes<HTMLDivElement> {
   height: number
@@ -17,15 +19,12 @@ const GridItemChildrenHolder = React.forwardRef<HTMLDivElement, GridItemChildren
   ({ height, width, zoom, className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("origin-top-left", className)}
+      className={cn("origin-top-left absolute top-0 left-0", className)} // 添加绝对定位
       style={{
         height: `${height}px`,
         width: `${width}px`,
         transform: `scale(${zoom})`,
-        minHeight: `${height}px`,
-        maxHeight: `${height}px`,
-        minWidth: `${width}px`,
-        maxWidth: `${width}px`,
+        padding: '1px',
       }}
       {...props}
     />
@@ -33,28 +32,7 @@ const GridItemChildrenHolder = React.forwardRef<HTMLDivElement, GridItemChildren
 );
 GridItemChildrenHolder.displayName = "GridItemChildrenHolder";
 
-interface WebViewProps {
-  url: string | null
-  errorView?: React.ReactNode
-  shouldShowLoadingSpinner?: boolean
-  onLoadingChanged?: (isLoading: boolean) => void
-}
 
-const WebView = ({ url, onLoadingChanged }: WebViewProps) => {
-  const handleLoad = () => onLoadingChanged?.(false);
-  const handleError = () => onLoadingChanged?.(false);
-
-  if (!url) return null;
-
-  return (
-    <iframe
-      src={url}
-      className="w-full h-full border-0"
-      onLoad={handleLoad}
-      onError={handleError}
-    />
-  );
-};
 
 interface GridItemProps {
   itemId: string
@@ -70,7 +48,8 @@ interface GridItemProps {
   dragHandleClass?: string
   isIframeBlocked: boolean
   onCloseClicked: (itemId: string) => void
-  onSizeChanged: (itemId: string, width: number, height: number, zoom: number, deviceCode: string | null) => void
+  onSizeChanged: (itemId: string, width: number, height: number, zoom: number, deviceCode: string | null) => void;
+  box: IBox;
 }
 
 export const GridItem = ({
@@ -84,6 +63,7 @@ export const GridItem = ({
   isIframeBlocked,
   onCloseClicked,
   onSizeChanged,
+  box,
 }: GridItemProps) => {
   const [height, setHeight] = React.useState<number>(initialHeight);
   const [width, setWidth] = React.useState<number>(initialWidth);
@@ -118,7 +98,7 @@ export const GridItem = ({
           dragHandleClass={dragHandleClass}
         />
         
-        <div className="flex-1 flex items-center justify-center w-full">
+        <div className="flex-1 flex items-center justify-center w-full relative">
           {isIframeBlocked ? (
             <div className="max-w-md px-6 text-center">
               <h3 className="text-lg font-semibold text-destructive mb-4">Oh no!</h3>
@@ -129,7 +109,7 @@ export const GridItem = ({
               </p>
             </div>
           ) : (
-            <>
+            <div className="relative w-full h-full">
               {!isWebViewLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Loader2 className="h-8 w-8 animate-spin text-primary/50" />
@@ -137,12 +117,12 @@ export const GridItem = ({
               )}
               <div 
                 className={cn(
-                  "w-full overflow-hidden transition-all duration-200",
+                  "relative w-full h-full overflow-hidden transition-all duration-200 bg-white",
                   isWebViewLoaded ? "opacity-100" : "opacity-0"
                 )}
                 style={{
-                  width: `calc(${width}px * 1.0 / ${zoom})`,
-                  height: isWebViewLoaded ? `calc(${height}px * 1.0 / ${zoom})` : '0',
+                  width: `${width / zoom}px`,
+                  height: isWebViewLoaded ? `${height / zoom}px` : '0',
                 }}
               >
                 <GridItemChildrenHolder
@@ -152,12 +132,13 @@ export const GridItem = ({
                 >
                   <WebView
                     url={url}
+                    box={box}
                     errorView={<div className="p-4 text-sm text-destructive">Error loading content</div>}
                     onLoadingChanged={handleWebViewLoad}
                   />
                 </GridItemChildrenHolder>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

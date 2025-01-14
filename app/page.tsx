@@ -21,7 +21,9 @@ export default function Home() {
     }
 
     try {
-      newUrl = normalizeUrl(newUrl);
+      newUrl = normalizeUrl(newUrl, {
+        forceHttps: true,
+      });
       new URL(newUrl);
       router.push(`/preview?url=${encodeURIComponent(newUrl)}`);
     } catch (e) {

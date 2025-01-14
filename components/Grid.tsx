@@ -148,6 +148,7 @@ export const Grid = ({
               onCloseClicked={onBoxCloseClicked}
               onSizeChanged={onBoxSizeChanged}
               dragHandleClass={DRAG_HANDLE_CLASS}
+              box={box}
             />
           </div>
         ))}
