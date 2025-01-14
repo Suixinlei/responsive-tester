@@ -10,11 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@kibalabs/core": "0.5.3",
-    "@kibalabs/core-react": "0.6.1-next.2",
-    "@kibalabs/everyview-tracker": "0.2.4",
-    "@kibalabs/everyview-tracker-react": "0.2.4",
-    "@kibalabs/ui-react": "0.8.5-next.30",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-scroll-area": "^1.2.2",
     "@radix-ui/react-select": "^2.1.4",
@@ -35,7 +30,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@kibalabs/build": "0.6.5-next.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
