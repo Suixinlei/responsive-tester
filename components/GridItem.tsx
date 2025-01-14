@@ -1,11 +1,11 @@
 // components/GridItem.tsx
-"use client"
+"use client";
 
-import React from 'react'
-import { Loader2 } from 'lucide-react'
+import React from 'react';
+import { Loader2 } from 'lucide-react';
 
-import { cn } from "@/lib/utils"
-import { GridItemTitle } from './GridItemTitle'
+import { cn } from "@/lib/utils";
+import { GridItemTitle } from './GridItemTitle';
 
 interface GridItemChildrenHolderProps extends React.HTMLAttributes<HTMLDivElement> {
   height: number
@@ -30,8 +30,8 @@ const GridItemChildrenHolder = React.forwardRef<HTMLDivElement, GridItemChildren
       {...props}
     />
   )
-)
-GridItemChildrenHolder.displayName = "GridItemChildrenHolder"
+);
+GridItemChildrenHolder.displayName = "GridItemChildrenHolder";
 
 interface WebViewProps {
   url: string | null
@@ -40,11 +40,11 @@ interface WebViewProps {
   onLoadingChanged?: (isLoading: boolean) => void
 }
 
-const WebView = ({ url, onLoadingChanged, errorView }: WebViewProps) => {
-  const handleLoad = () => onLoadingChanged?.(false)
-  const handleError = () => onLoadingChanged?.(false)
+const WebView = ({ url, onLoadingChanged }: WebViewProps) => {
+  const handleLoad = () => onLoadingChanged?.(false);
+  const handleError = () => onLoadingChanged?.(false);
 
-  if (!url) return null
+  if (!url) return null;
 
   return (
     <iframe
@@ -53,8 +53,8 @@ const WebView = ({ url, onLoadingChanged, errorView }: WebViewProps) => {
       onLoad={handleLoad}
       onError={handleError}
     />
-  )
-}
+  );
+};
 
 interface GridItemProps {
   itemId: string
@@ -80,31 +80,30 @@ export const GridItem = ({
   initialWidth = 100,
   initialZoom = 1,
   initialDeviceCode,
-  minimumWidth = 100,
   dragHandleClass,
   isIframeBlocked,
   onCloseClicked,
   onSizeChanged,
 }: GridItemProps) => {
-  const [height, setHeight] = React.useState<number>(initialHeight)
-  const [width, setWidth] = React.useState<number>(initialWidth)
-  const [zoom, setZoom] = React.useState<number>(initialZoom)
-  const [isWebViewLoaded, setIsWebViewLoaded] = React.useState<boolean>(false)
+  const [height, setHeight] = React.useState<number>(initialHeight);
+  const [width, setWidth] = React.useState<number>(initialWidth);
+  const [zoom, setZoom] = React.useState<number>(initialZoom);
+  const [isWebViewLoaded, setIsWebViewLoaded] = React.useState<boolean>(false);
 
   const handleSizeChange = React.useCallback((height: number, width: number, zoom: number, deviceCode: string | null) => {
-    setHeight(height)
-    setWidth(width)
-    setZoom(zoom)
-    onSizeChanged(itemId, width, height, zoom, deviceCode)
-  }, [itemId, onSizeChanged])
+    setHeight(height);
+    setWidth(width);
+    setZoom(zoom);
+    onSizeChanged(itemId, width, height, zoom, deviceCode);
+  }, [itemId, onSizeChanged]);
 
   const handleClose = () => {
-    onCloseClicked(itemId)
-  }
+    onCloseClicked(itemId);
+  };
 
   const handleWebViewLoad = (isLoading: boolean) => {
-    setIsWebViewLoaded(!isLoading)
-  }
+    setIsWebViewLoaded(!isLoading);
+  };
 
   return (
     <div className="bg-background text-foreground h-full w-full rounded-lg shadow-lg overflow-hidden">
@@ -124,9 +123,9 @@ export const GridItem = ({
             <div className="max-w-md px-6 text-center">
               <h3 className="text-lg font-semibold text-destructive mb-4">Oh no!</h3>
               <p className="text-sm text-muted-foreground">
-                {url} doesn't support iframes, which we use to ensure your privacy 🔒
+                {`${url} 不支持 iframe，我们使用 iframe 来确保您的隐私安全 🔒`}
                 <br />
-                If you're developing it, use localhost and everything should work 👌
+                {"如果您正在开发中，请使用 localhost，这样就可以正常工作了 👌"}
               </p>
             </div>
           ) : (
@@ -163,5 +162,5 @@ export const GridItem = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

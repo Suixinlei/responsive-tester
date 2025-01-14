@@ -37,5 +37,5 @@ export const createDefaultDevice = (): IBox => {
     zoom: 2,
     positionX: 0,
     positionY: 0,
-  }
-}
+  };
+};

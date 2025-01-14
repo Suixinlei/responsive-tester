@@ -1,7 +1,7 @@
 'use client';
-import { Plus } from "lucide-react"
-import { Button, ButtonProps } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Plus } from "lucide-react";
+import { Button, ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface FloatingActionButtonProps extends ButtonProps {
   bottomOffset?: string;
@@ -27,5 +27,5 @@ export function FloatingActionButton({
     >
       <Plus className="h-6 w-6" />
     </Button>
-  )
+  );
 }

@@ -24,7 +24,7 @@ export const viewport = {
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
-}
+};
 
 
 export default function RootLayout({

@@ -22,7 +22,7 @@ export const serializeBox = (box: IBox): string => {
     box.zoom,
     box.deviceCode || '',
   ].join('$');
-}
+};
 
 export const deserializeBox = (boxString: string): IBox | null => {
   const stringParts = boxString.split('$');
@@ -35,8 +35,9 @@ export const deserializeBox = (boxString: string): IBox | null => {
       positionY: Number(stringParts[4]),
       zoom: Number(stringParts[5]),
       deviceCode: stringParts[6] || null,
-    }
+    };
   } catch (error) {
+    console.error('Error deserializing box:', error);
     return null;
   }
-}
+};

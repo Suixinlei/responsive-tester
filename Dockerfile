@@ -1,41 +1,55 @@
+# 基础镜像
 FROM node:20-alpine AS base
-
-# 设置工作目录
 WORKDIR /app
+RUN npm config set registry https://registry.npmmirror.com
+RUN apk add --no-cache wget
 
-# 安装依赖阶段
+# 依赖安装阶段
 FROM base AS deps
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json ./
+COPY package-lock.json ./
+COPY .npmrc ./
+RUN npm install
 
-# 构建阶段
-FROM base AS builder
+# 开发环境 - 支持热重载
+FROM base AS development
+WORKDIR /app
+# 复制项目根目录的文件
+COPY package.json ./
+COPY package-lock.json ./
+COPY .npmrc ./
+# 复制依赖
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+
+# 源码将通过卷挂载
+ENV PORT=3000
+ENV NODE_ENV=development
+
+# 健康检查
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT} || exit 1
+
+# 默认使用 dev 命令
+CMD ["npm", "run", "dev"]
+
+# 生产环境
+FROM base AS production
+ARG NODE_ENV
+ENV NODE_ENV=$NODE_ENV
+
+WORKDIR /app
+COPY package.json ./
+COPY package-lock.json ./
+COPY .npmrc ./
+
+COPY --from=deps /app/node_modules ./node_modules
+
 RUN npm run build
 
-# 生产阶段
-FROM base AS runner
-ENV NODE_ENV production
+ENV PORT=3000
+ENV NODE_ENV=production
 
-# 添加非 root 用户
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT} || exit 1
 
-# 复制构建产物和必要文件
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# 切换到非 root 用户
-USER nextjs
-
-# 暴露端口
-EXPOSE 3000
-
-# 设置环境变量
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-# 启动命令
-CMD ["node", "server.js"]
+CMD ["npm", "run", "start"]

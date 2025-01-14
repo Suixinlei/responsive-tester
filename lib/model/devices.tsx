@@ -158,4 +158,4 @@ export const getDeviceByCode = (deviceCode?: string | null): IDevice | null => {
     return null;
   }
   return candidates[0];
-}
+};

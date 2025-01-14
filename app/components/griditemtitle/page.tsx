@@ -1,8 +1,8 @@
 // app/demo/page.tsx
-"use client"
+"use client";
 
-import React from 'react'
-import { GridItemTitle } from '@/components/GridItemTitle'
+import React from 'react';
+import { GridItemTitle } from '@/components/GridItemTitle';
 
 // === Demo Page ===
 export default function GridItemTitleDemoPage() {
@@ -11,19 +11,19 @@ export default function GridItemTitleDemoPage() {
     width: 375,
     zoom: 1,
     deviceCode: null as string | null
-  })
+  });
 
   // 注意，一定要使用 useCallback，否则会出现每次渲染时，handleSizeChanged 都会被重新创建，导致 onSizeChanged 被多次调用
   const handleSizeChanged = React.useCallback(
     (height: number, width: number, zoom: number, deviceCode: string | null) => {
-      setSizes({ height, width, zoom, deviceCode })
+      setSizes({ height, width, zoom, deviceCode });
     },
     []
-  )
+  );
 
   const handleClose = () => {
-    console.log('Close clicked')
-  }
+    console.log('Close clicked');
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
@@ -47,5 +47,5 @@ export default function GridItemTitleDemoPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

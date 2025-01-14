@@ -11,6 +11,12 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      // 结尾必须有分号
+      semi: ["error", "always"],
+    }
+  }
 ];
 
 export default eslintConfig;
