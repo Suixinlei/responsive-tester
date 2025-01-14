@@ -5,7 +5,7 @@ import { Box, Stack, Direction } from '@kibalabs/ui-react';
 
 import { NavBar } from './components/navBar';
 import { Grid } from './components/grid';
-import { IBox, deserializeBox, serializeBox, defaultLayout, createDefaultDevice } from './model';
+import { IBox, deserializeBox, serializeBox, defaultLayout, createDefaultDevice } from '../lib/model';
 import { FloatingActionButton } from './components/floatingActionButton';
 import { Footer } from './components/footer';
 

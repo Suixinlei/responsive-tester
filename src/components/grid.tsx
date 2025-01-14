@@ -6,7 +6,7 @@ import 'react-grid-layout/css/styles.css';
 
 import { GridItem } from './gridItem';
 import { GridBackground } from './gridBackground';
-import { IBox } from '../model';
+import { IBox } from '../../lib/model';
 
 const DRAG_HANDLE_CLASS = 'drag-handle';
 

@@ -1,0 +1,23 @@
+/* Make sure dragged items appear above other elements */
+.react-grid-item.react-draggable-dragging {
+  z-index: 100;
+}
+
+/* Custom scrollbar for better UX */
+.grid-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.grid-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.grid-container::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+.grid-container::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border));
+}

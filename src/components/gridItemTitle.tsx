@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getClassName } from '@kibalabs/core';
 import { Alignment, Stack, Direction, PaddingSize, IconButton, KibaIcon, Box } from '@kibalabs/ui-react';
 
-import { IDevice, devices, getDeviceByCode } from '../model/devices';
+import { IDevice, devices, getDeviceByCode } from '../../lib/model/devices';
 
 // TODO(krishan711): replace the selects with one from ui-react once it's there.
 const StyledSelect = styled.select`
