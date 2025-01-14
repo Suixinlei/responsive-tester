@@ -1,52 +1,41 @@
-# Mac
-*.DS_Store
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# IDEs
-.idea/
-.vscode/
-tmp/
-*.swp
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Autoenv
-.activate
+# testing
+/coverage
 
-# Protobufs
-*_pb2.*
+# next.js
+/.next/
+/out/
 
-# Testing
-coverage
-.coverage
-tests.xml
-lint.xml
-.noseids
-nosetests.xml
-eslint.xml
-jest.xml
-test.log
-lint.log
-pylint.log
-pipdeptree.log
-local_testing*
-mypy.log
-build*.log
+# production
+/build
 
-# Generated Code
-generated/
+# misc
+.DS_Store
+*.pem
 
-# Python
-__pycache__/
-eggs/
-dist/
-build/
-*.egg-info/
-.env*
-.mypy_cache
-
-# JS
-node_modules/
-dist/
-build/
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-*.d.ts
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
