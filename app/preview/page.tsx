@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocalStorageState } from 'ahooks';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -7,41 +8,6 @@ import { NavBar } from '@/components/NavBar'
 import { Grid } from '@/components/Grid'
 import { FloatingActionButton } from '@/components/FloatingActionButton'
 import { IBox, deserializeBox, serializeBox, defaultLayout, createDefaultDevice } from '@/lib/model'
-
-// Helper functions
-const boxListFromStringList = (stringList: string[] | null): IBox[] => {
-  if (!stringList) {
-    return [];
-  }
-  return stringList?.map((boxString: string): IBox | null => deserializeBox(boxString))
-    .filter((box: IBox | null): boolean => box !== null) as IBox[];
-}
-
-const boxListToStringList = (boxes: IBox[] | null): string[] | null => {
-  if (boxes === null) {
-    return null;
-  }
-  return boxes.map((box: IBox): string => serializeBox(box));
-}
-
-// Custom hooks
-const useLocalStorage = <T,>(key: string, initialValue: T): [T, (value: T) => void] => {
-  const [storedValue, setStoredValue] = React.useState<T>(() => {
-    if (typeof window === "undefined") return initialValue
-    try {
-      const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      return initialValue
-    }
-  })
-
-  React.useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(storedValue))
-  }, [key, storedValue])
-
-  return [storedValue, setStoredValue]
-}
 
 const useElementSize = () => {
   const [size, setSize] = React.useState({ width: 0, height: 0 })
@@ -63,9 +29,10 @@ export default function GridPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [size, gridRef] = useElementSize()
-  const [boxes, setBoxes] = useLocalStorage<IBox[]>('boxes_v2', [])
-  const [storedUrl, setStoredUrl] = useLocalStorage('url_v1', '')
-  const [startTime] = React.useState<Date>(new Date())
+  const [boxes, setBoxes] = useLocalStorageState<IBox[]>('boxes_v2', {
+    defaultValue: defaultLayout,
+  })
+  const [storedUrl, setStoredUrl] = useState('https://www.kouka.tech')
 
   const [totalWidth, setTotalWidth] = React.useState(10000)
   const rowHeight = 20
@@ -76,14 +43,8 @@ export default function GridPage() {
 
   const url = searchParams.get('url') || storedUrl
 
-  React.useEffect(() => {
-    if (!url && !storedUrl) {
-      router.push('?url=https://www.everypagehq.com')
-    }
-    if (boxes.length === 0) {
-      setBoxes(defaultLayout)
-    }
-  }, [url, storedUrl])
+
+  console.log('boxes', boxes)
 
   const onUrlChanged = (newUrl: string) => {
     // Track analytics here if needed
@@ -101,12 +62,12 @@ export default function GridPage() {
     setBoxes(boxes.filter((box: IBox) => box.itemId !== itemId))
   }
 
-  const onBoxSizeChanged = (itemId: string, width: number, height: number, zoom: number, deviceCode: string | null) => {
+  const onBoxSizeChanged = React.useCallback((itemId: string, width: number, height: number, zoom: number, deviceCode: string | null) => {
     // Analytics tracking logic here
     setBoxes(boxes.map((box: IBox): IBox => (
       box.itemId === itemId ? {...box, width, height, zoom, deviceCode} : box
     )))
-  }
+  }, [JSON.stringify(boxes)])
 
   const onBoxPositionChanged = (itemId: string, positionX: number, positionY: number) => {
     setBoxes(boxes.map((box: IBox): IBox => (

@@ -13,14 +13,13 @@ export default function GridItemTitleDemoPage() {
     deviceCode: null as string | null
   })
 
-  const handleSizeChanged = (
-    height: number, 
-    width: number, 
-    zoom: number, 
-    deviceCode: string | null
-  ) => {
-    setSizes({ height, width, zoom, deviceCode })
-  }
+  // 注意，一定要使用 useCallback，否则会出现每次渲染时，handleSizeChanged 都会被重新创建，导致 onSizeChanged 被多次调用
+  const handleSizeChanged = React.useCallback(
+    (height: number, width: number, zoom: number, deviceCode: string | null) => {
+      setSizes({ height, width, zoom, deviceCode })
+    },
+    []
+  )
 
   const handleClose = () => {
     console.log('Close clicked')

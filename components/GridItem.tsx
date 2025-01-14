@@ -91,12 +91,12 @@ export const GridItem = ({
   const [zoom, setZoom] = React.useState<number>(initialZoom)
   const [isWebViewLoaded, setIsWebViewLoaded] = React.useState<boolean>(false)
 
-  const handleSizeChange = (height: number, width: number, zoom: number, deviceCode: string | null) => {
+  const handleSizeChange = React.useCallback((height: number, width: number, zoom: number, deviceCode: string | null) => {
     setHeight(height)
     setWidth(width)
     setZoom(zoom)
     onSizeChanged(itemId, width, height, zoom, deviceCode)
-  }
+  }, [itemId, onSizeChanged])
 
   const handleClose = () => {
     onCloseClicked(itemId)

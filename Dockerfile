@@ -1,17 +1,41 @@
-# Stage 1: build
-FROM node:16.13.0-stretch as build
+FROM node:20-alpine AS base
 
+# 设置工作目录
 WORKDIR /app
 
-# Install requirements
-COPY package.json .
-COPY package-lock.json .
+# 安装依赖阶段
+FROM base AS deps
+COPY package.json package-lock.json ./
 RUN npm ci
 
-# Build app
+# 构建阶段
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve with nginx
-FROM ghcr.io/kibalabs/app-serve:latest
-COPY --from=build /app/dist /usr/share/nginx/html
+# 生产阶段
+FROM base AS runner
+ENV NODE_ENV production
+
+# 添加非 root 用户
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# 复制构建产物和必要文件
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# 切换到非 root 用户
+USER nextjs
+
+# 暴露端口
+EXPOSE 3000
+
+# 设置环境变量
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+# 启动命令
+CMD ["node", "server.js"]

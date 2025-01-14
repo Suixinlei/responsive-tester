@@ -5,7 +5,7 @@ import { IBox } from './box';
 export const defaultLayout: IBox[] = [{
   itemId: 'default-1',
   deviceCode: 'bs-lg',
-  width: 992,
+  width: 1920,
   height: 1080,
   zoom: 2.5,
   positionX: 0,
@@ -13,7 +13,7 @@ export const defaultLayout: IBox[] = [{
 }, {
   itemId: 'default-2',
   deviceCode: 'bs-md',
-  width: 768,
+  width: 1280,
   height: 1080,
   zoom: 2.5,
   positionX: 14,
@@ -25,14 +25,6 @@ export const defaultLayout: IBox[] = [{
   height: 1080,
   zoom: 2.5,
   positionX: 25,
-  positionY: 0,
-}, {
-  itemId: 'default-4',
-  deviceCode: 'bs-xs',
-  width: 575,
-  height: 1080,
-  zoom: 2.5,
-  positionX: 0,
   positionY: 0,
 }];
 
