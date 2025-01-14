@@ -30,7 +30,7 @@ export const defaultLayout: IBox[] = [
     "positionX": 54,
     "positionY": 0
   }
-]
+];
 
 export const createDefaultDevice = (): IBox => {
   return {
