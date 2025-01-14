@@ -5,32 +5,32 @@ import { IBox } from './box';
 export const defaultLayout: IBox[] = [
   {
     "itemId": "default-1",
-    "deviceCode": "bs-lg",
+    "deviceCode": "dp-1080",
     "width": 1920,
     "height": 1080,
-    "zoom": 2.5,
+    "zoom": 2,
     "positionX": 0,
     "positionY": 0
   },
   {
     "itemId": "default-2",
-    "deviceCode": "bs-md",
-    "width": 1280,
+    "deviceCode": "bs-xl",
+    "width": 1200,
     "height": 1080,
-    "zoom": 2.5,
-    "positionX": 26,
+    "zoom": 2,
+    "positionX": 33,
     "positionY": 0
   },
   {
     "itemId": "default-3",
-    "deviceCode": "bs-sm",
-    "width": 576,
-    "height": 1080,
-    "zoom": 2.5,
-    "positionX": 44,
+    "deviceCode": "ip-12pm",
+    "width": 428,
+    "height": 926,
+    "zoom": 1.5,
+    "positionX": 54,
     "positionY": 0
   }
-];
+]
 
 export const createDefaultDevice = (): IBox => {
   return {
