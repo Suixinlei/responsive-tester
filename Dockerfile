@@ -14,10 +14,7 @@ RUN npm install
 # 开发环境 - 支持热重载
 FROM base AS development
 WORKDIR /app
-# 复制项目根目录的文件
-COPY package.json ./
-COPY package-lock.json ./
-COPY .npmrc ./
+
 # 复制依赖
 COPY --from=deps /app/node_modules ./node_modules
 
@@ -38,9 +35,7 @@ ARG NODE_ENV
 ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-COPY .npmrc ./
+COPY . ./
 
 COPY --from=deps /app/node_modules ./node_modules
 
