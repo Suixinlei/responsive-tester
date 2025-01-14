@@ -10,7 +10,7 @@ interface WebViewProps {
   box: IBox;
 }
 
-export const WebView = ({ url, box, onLoadingChanged }: WebViewProps) => {
+export const WebView = ({ url, onLoadingChanged }: WebViewProps) => {
   const handleLoad =  () => onLoadingChanged?.(false);
 
   const handleError = () => onLoadingChanged?.(false);
